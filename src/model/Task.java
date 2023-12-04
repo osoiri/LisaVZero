@@ -5,10 +5,10 @@ import java.time.OffsetDateTime;
 public class Task {
     private String name;
     private String description;
-    private OffsetDateTime createdDate; //TODO: make it as final as it is fixed
+    private final OffsetDateTime createdDate;
     private OffsetDateTime startDate;
     private OffsetDateTime endDate;
-    private Reward reward;
+    private final Reward reward;
     private TaskStatus status;
 
     public String getName() {
@@ -31,10 +31,6 @@ public class Task {
         return createdDate;
     }
 
-    public void setCreatedDate(OffsetDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
-
     public OffsetDateTime getStartDate() {
         return startDate;
     }
@@ -55,16 +51,33 @@ public class Task {
         return reward;
     }
 
-    public void setReward(Reward reward) {
-        this.reward = reward;
-    }
-
     public TaskStatus getStatus() {
         return status;
     }
 
     public void setStatus(TaskStatus status) {
         this.status = status;
+    }
+
+    public Task(Builder builder) {
+        this.name = builder.name;
+        this.description = builder.description;
+        this.createdDate = OffsetDateTime.now();
+        this.startDate = builder.startDate;
+        this.endDate = builder.endDate;
+        this.reward = createReward();
+        this.status = TaskStatus.UPCOMING;
+    }
+
+    public static Builder getBuilder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private String name;
+        private String description;
+        private OffsetDateTime startDate;
+        private OffsetDateTime endDate;
     }
 
     @Override
@@ -78,5 +91,13 @@ public class Task {
                 ", reward=" + reward +
                 ", status=" + status +
                 '}';
+    }
+
+    private Reward createReward() {
+        return Reward.getBuilder()
+                .setCoin(2)
+                .setExp(10)
+                .setMultiplier(1.1f)
+                .build();
     }
 }
