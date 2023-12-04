@@ -1,13 +1,13 @@
 package model;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Map;
 
 public class User {
     private String userId;
     private String name;
     private LocalDate birthday;
-    private List<Profile> profiles;
+    private Map<String, Profile> profiles;
     private Integer totalCoins;
 
     public String getUserId() {
@@ -34,11 +34,11 @@ public class User {
         this.birthday = birthday;
     }
 
-    public List<Profile> getProfiles() {
+    public Map<String, Profile> getProfiles() {
         return profiles;
     }
 
-    public void setProfiles(List<Profile> profiles) {
+    public void setProfiles(Map<String, Profile> profiles) {
         this.profiles = profiles;
     }
 
